@@ -16,7 +16,13 @@ diesel setup
 # changed path on diesel.toml
 
 diesel migrate run
+```
 
+### How to migration db with diesel 
+```sh
+cd ./src/infrastructure/postgres
+diesel migration run # up
+diesel migration redo # down
 ```
 
 ## How to see coverage
@@ -33,3 +39,4 @@ cargo update
 
 
 reference_course: https://www.udemy.com/course/rust-mastery-saga-backend-rust
+

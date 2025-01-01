@@ -1,5 +1,4 @@
 -- Your SQL goes here
--- Your SQL goes here
 CREATE TABLE quests (
     id SERIAL PRIMARY KEY,
     "name" VARCHAR(255) NOT NULL,
