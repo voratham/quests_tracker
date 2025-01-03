@@ -9,7 +9,7 @@ use crate::domain::entities::guild_commanders::RegisterGuildCommanderEntity;
 pub trait GuildCommandersRepository {
     async fn register(
         &self,
-        register_guild_commander_model: RegisterGuildCommanderEntity,
+        register_guild_commander_entity: RegisterGuildCommanderEntity,
     ) -> Result<i32>;
 
     async fn find_by_username(&self, username: String) -> Result<RegisterGuildCommanderEntity>;
