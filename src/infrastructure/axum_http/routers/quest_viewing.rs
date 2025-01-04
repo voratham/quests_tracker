@@ -25,7 +25,7 @@ pub fn routes(db_pool: Arc<PgPoolSquad>) -> Router {
 
     Router::new()
         .route("/:quest_id", get(view_details))
-        .route("/board_checking", get(board_checking))
+        .route("/board-checking", get(board_checking))
         .with_state(Arc::new(quest_viewing_use_case))
 }
 

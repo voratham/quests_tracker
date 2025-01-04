@@ -26,11 +26,11 @@ pub fn routes(db_pool: Arc<PgPoolSquad>) -> Router {
     );
 
     Router::new()
-        .route("adventurers/login", post(adventurers_login))
-        .route("adventurers/refresh-token", post(adventurers_refresh_token))
-        .route("guild_commanders/login", post(guild_commanders_login))
+        .route("/adventurers/login", post(adventurers_login))
+        .route("/adventurers/refresh-token", post(adventurers_refresh_token))
+        .route("/guild-commanders/login", post(guild_commanders_login))
         .route(
-            "guild_commanders/refresh-token",
+            "/guild-commanders/refresh-token",
             post(guild_commanders_refresh_token),
         )
         .with_state(Arc::new(authentication_use_case))
