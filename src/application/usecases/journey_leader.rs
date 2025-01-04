@@ -20,11 +20,7 @@ where
     T1: JourneyLedgerRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
-    pub fn new(
-        &self,
-        journey_leader_repository: Arc<T1>,
-        quest_viewing_repository: Arc<T2>,
-    ) -> Self {
+    pub fn new(journey_leader_repository: Arc<T1>, quest_viewing_repository: Arc<T2>) -> Self {
         Self {
             journey_leader_repository,
             quest_viewing_repository,

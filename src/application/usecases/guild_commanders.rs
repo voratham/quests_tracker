@@ -18,7 +18,7 @@ impl<T> GuildCommandersUseCase<T>
 where
     T: GuildCommandersRepository + Send + Sync,
 {
-    pub fn new(&self, guild_commanders_repository: Arc<T>) -> Self {
+    pub fn new(guild_commanders_repository: Arc<T>) -> Self {
         Self {
             guild_commanders_repository,
         }

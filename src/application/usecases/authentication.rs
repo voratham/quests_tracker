@@ -18,11 +18,7 @@ where
     T1: AdventurersRepository + Send + Sync,
     T2: GuildCommandersRepository + Send + Sync,
 {
-    pub fn new(
-        &self,
-        adventurers_repository: Arc<T1>,
-        guild_commanders_repository: Arc<T2>,
-    ) -> Self {
+    pub fn new(adventurers_repository: Arc<T1>, guild_commanders_repository: Arc<T2>) -> Self {
         Self {
             adventurers_repository,
             guild_commanders_repository,

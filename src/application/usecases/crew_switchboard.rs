@@ -20,11 +20,7 @@ where
     T1: CrewSwitchboardRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
-    pub fn new(
-        &self,
-        crew_switchboard_repository: Arc<T1>,
-        quest_viewing_repository: Arc<T2>,
-    ) -> Self {
+    pub fn new(crew_switchboard_repository: Arc<T1>, quest_viewing_repository: Arc<T2>) -> Self {
         Self {
             crew_switchboard_repository,
             quest_viewing_repository,

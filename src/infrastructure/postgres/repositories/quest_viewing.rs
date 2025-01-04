@@ -29,7 +29,7 @@ impl QuestViewingRepository for QuestViewingPostgres {
     async fn board_checking(&self, filter: &BoardCheckingFilter) -> Result<Vec<QuestEntity>> {
         unimplemented!()
     }
-    async fn adventurers_counting_by_quest_id(quest_id: i32) -> Result<i64> {
+    async fn adventurers_counting_by_quest_id(&self, quest_id: i32) -> Result<i64> {
         unimplemented!()
     }
 }
