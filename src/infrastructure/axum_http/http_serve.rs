@@ -22,11 +22,11 @@ pub async fn start(config: Arc<DotEnvyConfig>, db_pool: Arc<PgPoolSquad>) -> Res
         .fallback(not_found)
         .route("/healthcheck", get(health_check))
         .layer(TimeoutLayer::new(Duration::from_secs(
-            config.server.timeout, //  middleware
+            config.server.timeout, //  middleware 4
         )))
         .layer(RequestBodyLimitLayer::new(
             (config.server.body_limit * 1024 * 1024).try_into()?,
-        ))
+        ))  //  middleware 3
         .layer(
             CorsLayer::new()
                 .allow_methods([
@@ -36,9 +36,9 @@ pub async fn start(config: Arc<DotEnvyConfig>, db_pool: Arc<PgPoolSquad>) -> Res
                     Method::PATCH,
                     Method::DELETE,
                 ])
-                .allow_origin(Any),
+                .allow_origin(Any), //  middleware 2
         )
-        .layer(TraceLayer::new_for_http());
+        .layer(TraceLayer::new_for_http()); //  middleware 1
 
     let addr = std::net::SocketAddr::from(([0, 0, 0, 0], config.server.port));
 

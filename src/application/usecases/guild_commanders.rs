@@ -4,7 +4,7 @@ use anyhow::Result;
 
 use crate::domain::{
     repositories::guild_commanders::GuildCommandersRepository,
-    value_objects::guild_commander_model::RegisterAdventurerModel,
+    value_objects::guild_commander_model::RegisterGuildCommanderModel,
 };
 
 pub struct GuildCommandersUseCase<T>
@@ -26,7 +26,7 @@ where
 
     pub async fn register(
         &self,
-        register_guild_commander_model: RegisterAdventurerModel,
+        register_guild_commander_model: RegisterGuildCommanderModel,
     ) -> Result<i32> {
         unimplemented!()
     }
