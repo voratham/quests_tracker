@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use axum::{extract::State, response::IntoResponse, routing::post, Json, Router};
+use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::post, Json, Router};
 
 use crate::{
     application::usecases::guild_commanders::GuildCommandersUseCase,
@@ -31,5 +31,18 @@ pub async fn register<T>(
 where
     T: GuildCommandersRepository + Send + Sync,
 {
-    unimplemented!()
+    match guild_commanders_use_case
+        .register(register_guild_commander_model)
+        .await
+    {
+        Ok(guild_commander_id) => (
+            StatusCode::CREATED,
+            format!(
+                "Register guild commander id: {} successfully",
+                guild_commander_id
+            ),
+        )
+            .into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
