@@ -104,7 +104,51 @@ where
     T1: AdventurersRepository + Send + Sync,
     T2: GuildCommandersRepository + Send + Sync,
 {
-    unimplemented!()
+    if jar.get("rft").is_none() {
+        return (StatusCode::BAD_REQUEST, "Refresh token not found").into_response();
+    }
+
+    let rft = jar.get("rft").unwrap();
+    let refresh_token = rft.value().to_string(); // extract value to static
+
+    match authenticate_use_case
+        .adventurers_refresh_token(refresh_token)
+        .await
+    {
+        Ok(passport) => {
+            let mut act_cookie = Cookie::build(("act", passport.access_token.clone()))
+                .path("/")
+                .same_site(cookie::SameSite::Lax)
+                .http_only(true)
+                .max_age(Duration::days(14));
+
+            let mut rft_cookie = Cookie::build(("rft", passport.refresh_token.clone()))
+                .path("/")
+                .same_site(cookie::SameSite::Lax)
+                .http_only(true)
+                .max_age(Duration::days(14));
+
+            if get_stage() == Stage::Production {
+                act_cookie = act_cookie.secure(true);
+                rft_cookie = rft_cookie.secure(true);
+            }
+
+            let mut headers = HeaderMap::new();
+
+            headers.append(
+                header::SET_COOKIE,
+                HeaderValue::from_str(&act_cookie.to_string()).unwrap(),
+            );
+
+            headers.append(
+                header::SET_COOKIE,
+                HeaderValue::from_str(&rft_cookie.to_string()).unwrap(),
+            );
+
+            (StatusCode::OK, headers, format!("Login successfully")).into_response()
+        }
+        Err(e) => (StatusCode::UNAUTHORIZED, e.to_string()).into_response(),
+    }
 }
 
 pub async fn guild_commanders_login<T1, T2>(
@@ -163,5 +207,49 @@ where
     T1: AdventurersRepository + Send + Sync,
     T2: GuildCommandersRepository + Send + Sync,
 {
-    unimplemented!()
+    if jar.get("rft").is_none() {
+        return (StatusCode::BAD_REQUEST, "Refresh token not found").into_response();
+    }
+
+    let rft = jar.get("rft").unwrap();
+    let refresh_token = rft.value().to_string(); // extract value to static
+
+    match authenticate_use_case
+        .guild_commanders_refresh_token(refresh_token)
+        .await
+    {
+        Ok(passport) => {
+            let mut act_cookie = Cookie::build(("act", passport.access_token.clone()))
+                .path("/")
+                .same_site(cookie::SameSite::Lax)
+                .http_only(true)
+                .max_age(Duration::days(14));
+
+            let mut rft_cookie = Cookie::build(("rft", passport.refresh_token.clone()))
+                .path("/")
+                .same_site(cookie::SameSite::Lax)
+                .http_only(true)
+                .max_age(Duration::days(14));
+
+            if get_stage() == Stage::Production {
+                act_cookie = act_cookie.secure(true);
+                rft_cookie = rft_cookie.secure(true);
+            }
+
+            let mut headers = HeaderMap::new();
+
+            headers.append(
+                header::SET_COOKIE,
+                HeaderValue::from_str(&act_cookie.to_string()).unwrap(),
+            );
+
+            headers.append(
+                header::SET_COOKIE,
+                HeaderValue::from_str(&rft_cookie.to_string()).unwrap(),
+            );
+
+            (StatusCode::OK, headers, format!("Login successfully")).into_response()
+        }
+        Err(e) => (StatusCode::UNAUTHORIZED, e.to_string()).into_response(),
+    }
 }
