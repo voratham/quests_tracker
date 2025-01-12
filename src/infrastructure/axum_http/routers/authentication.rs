@@ -164,13 +164,13 @@ where
         .await
     {
         Ok(passport) => {
-            let mut act_cookie = cookie::Cookie::build(("act", passport.access_token.clone()))
+            let mut act_cookie = Cookie::build(("act", passport.access_token.clone()))
                 .path("/")
                 .same_site(cookie::SameSite::Lax)
                 .http_only(true)
                 .max_age(Duration::days(14));
 
-            let mut rft_cookie = cookie::Cookie::build(("rft", passport.refresh_token.clone()))
+            let mut rft_cookie = Cookie::build(("rft", passport.refresh_token.clone()))
                 .path("/")
                 .same_site(cookie::SameSite::Lax)
                 .http_only(true)
@@ -193,7 +193,7 @@ where
                 HeaderValue::from_str(&rft_cookie.to_string()).unwrap(),
             );
 
-            (StatusCode::OK, "Login successfully").into_response()
+            (StatusCode::OK, headers, "Login successfully").into_response()
         }
         Err(e) => (StatusCode::UNAUTHORIZED, e.to_string()).into_response(),
     }
