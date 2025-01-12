@@ -1,5 +1,8 @@
 use axum::{
-    extract::Request, http::{header, StatusCode}, middleware::Next, response::Response
+    extract::Request,
+    http::{header, StatusCode},
+    middleware::Next,
+    response::Response,
 };
 
 use crate::{
