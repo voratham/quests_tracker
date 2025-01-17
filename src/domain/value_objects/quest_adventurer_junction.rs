@@ -13,3 +13,5 @@ pub struct QuestAdventurerJunction {
     pub quest_id: i32,
     pub adventurer_id: i32,
 }
+
+pub const MAX_ADVENTURERS_PER_QUEST: i64 = 4;
