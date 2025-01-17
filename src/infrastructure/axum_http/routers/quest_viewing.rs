@@ -2,9 +2,10 @@ use std::sync::Arc;
 
 use axum::{
     extract::{Path, Query, State},
+    http::StatusCode,
     response::IntoResponse,
     routing::get,
-    Router,
+    Json, Router,
 };
 
 use crate::{
@@ -36,7 +37,10 @@ pub async fn view_details<T>(
 where
     T: QuestViewingRepository + Send + Sync,
 {
-    unimplemented!()
+    match quest_viewing_use_case.view_details(quest_id).await {
+        Ok(quest_model) => (StatusCode::OK, Json(quest_model)).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
 
 pub async fn board_checking<T>(
@@ -46,5 +50,8 @@ pub async fn board_checking<T>(
 where
     T: QuestViewingRepository + Send + Sync,
 {
-    unimplemented!()
+    match quest_viewing_use_case.board_checking(&filter).await {
+        Ok(quests_model) => (StatusCode::OK, Json(quests_model)).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
