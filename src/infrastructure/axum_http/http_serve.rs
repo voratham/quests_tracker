@@ -1,7 +1,7 @@
 use std::{sync::Arc, time::Duration};
 
 use anyhow::{Ok, Result};
-use axum::{extract::path, http::Method, routing::get, Router};
+use axum::{http::Method, routing::get, Router};
 use tokio::net::TcpListener;
 use tower_http::{
     cors::{Any, CorsLayer},
@@ -31,8 +31,8 @@ pub async fn start(config: Arc<DotEnvyConfig>, db_pool: Arc<PgPoolSquad>) -> Res
             routers::quest_viewing::routes(Arc::clone(&db_pool)),
         )
         .nest(
-            "/journey-leader",
-            routers::journey_leader::routes(Arc::clone(&db_pool)),
+            "/journey-ledger",
+            routers::journey_ledger::routes(Arc::clone(&db_pool)),
         )
         .nest(
             "/guild-commanders",

@@ -31,7 +31,7 @@ pub fn routes(db_pool: Arc<PgPoolSquad>) -> Router {
 
     let quest_viewing_repository = QuestViewingPostgres::new(Arc::clone(&db_pool));
 
-    let crew_switchboard_usecase = CrewSwitchboardUseCase::new(
+    let crew_switchboard_use_case = CrewSwitchboardUseCase::new(
         Arc::new(crew_switchboard_repository),
         Arc::new(quest_viewing_repository),
     );
@@ -40,7 +40,7 @@ pub fn routes(db_pool: Arc<PgPoolSquad>) -> Router {
         .route("/join/:quest_id", post(join))
         .route("/leave/:quest_id", delete(leave))
         .route_layer(middleware::from_fn(adventurers_authorization))
-        .with_state(Arc::new(crew_switchboard_usecase))
+        .with_state(Arc::new(crew_switchboard_use_case))
 }
 
 pub async fn join<T1, T2>(
