@@ -36,7 +36,13 @@ cargo tarpaulin --out xml
 cargo update
 ```
 
-
+## Unit test
+```sh
+cargo install cargo-tarpaulin
+cargo tarpaulin --out xml # How to export coverage xml format
+cargo tarpaulin --out html # How to export coverage html format
+open tarpaulin-report.html # How to see html coverage ✅
+```
 
 reference_course: https://www.udemy.com/course/rust-mastery-saga-backend-rust
 

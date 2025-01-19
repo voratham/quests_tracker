@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use anyhow::{Error, Result};
+use anyhow::Result;
 use axum::async_trait;
 use diesel::{delete, dsl::insert_into, ExpressionMethods, RunQueryDsl};
 
